@@ -63,7 +63,6 @@ public class Plotty extends JavaPlugin{
 			@SuppressWarnings("unused")
 			@EventHandler(priority = EventPriority.NORMAL)
 			public void onPlayerJoin(PlayerJoinEvent e){
-				e.getPlayer().sendMessage("§1[Plotty] §bThis server is running §9§lPlotty v2 §b§obeta testing.§b No other server has this yet, so enjoy it while its private!");
 				List<String> list = stringArrayToList(dm.config.playerGrantNotify);
 				if(list.contains(e.getPlayer().getName())){
 					if(dm.getPlayer(e.getPlayer().getName()).grantedPlots > 0){
