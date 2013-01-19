@@ -1,0 +1,10 @@
+name: Plotty
+version: 2.0
+main: com.daviga404.Plotty
+commands:
+    plot:
+        description: Main Plotty command.
+        usage: /plot ?
+    plotty:
+        description: Main Plotty command.
+        usage: /plot ?
