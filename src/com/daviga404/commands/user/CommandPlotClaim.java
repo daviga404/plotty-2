@@ -7,9 +7,7 @@ import com.daviga404.Plotty;
 import com.daviga404.commands.PlottyCommand;
 import com.daviga404.data.DataManager;
 import com.daviga404.data.PlottyPlot;
-import com.daviga404.plots.Plot;
 import com.daviga404.plots.PlotFinder;
-import com.daviga404.plots.PlotRegion;
 
 public class CommandPlotClaim extends PlottyCommand{
 	private Plotty plugin;
@@ -24,10 +22,10 @@ public class CommandPlotClaim extends PlottyCommand{
 		this.plugin = pl;
 	}
 	public boolean execute(Player p, String[] args){
-		if(plugin.getDataManager().pExceededMaxPlots(p.getName())){
-			p.sendMessage(plugin.lang.reachedMaxPlots);
-			return true;
-		}
+		//if(plugin.getDataManager().pExceededMaxPlots(p.getName())){
+		//	p.sendMessage(plugin.lang.reachedMaxPlots);
+		//	return true;
+		//}
 		Location l = p.getLocation();
 		int x = l.getBlockX();
 		int z = l.getBlockZ();
@@ -42,12 +40,8 @@ public class CommandPlotClaim extends PlottyCommand{
 			p.sendMessage(plugin.lang.plotHere);
 			return true;
 		}
-		int id = plugin.getDataManager().getLatestId();
-		Plot legacyPlot = new Plot(corners[0],plugin.plotHeight,corners[1],p.getWorld());
-		PlotRegion.makePlotRegion(legacyPlot, p.getName(),id);
-		plugin.getDataManager().addPlot(legacyPlot, p.getName(), id);
-		plugin.telePlayer(legacyPlot, p);
-		p.sendMessage(plugin.lang.plotClaimed.replaceAll("%s", id+""));
+		
+		p.sendMessage(plugin.makePlot(plugin.getDataManager().getLatestId(),corners[0],0,corners[1],p.getWorld(),p,true));
 		return true;
 	}
 }

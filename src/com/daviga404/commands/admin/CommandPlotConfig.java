@@ -17,7 +17,8 @@ public class CommandPlotConfig extends PlottyCommand{
 		"(config)((( )(\\w+))|(( )(\\w+)( )(\\w+))|(( )(worlds)( )(add)( )(\\w+))|(( )(worlds)( )(remove)( )(\\w+)))?", //config [[option] [value] worlds add <worldname>]
 		"plotty.admin.config",
 		"/plot config [option [value]|worlds add/remove <name>]",
-		"Changes/views an option in config. (see documentation)"
+		"Changes/views an option in config. (see documentation)",
+		false
 		);
 		this.plugin = pl;
 	}

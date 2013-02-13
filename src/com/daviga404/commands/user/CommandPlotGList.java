@@ -22,7 +22,8 @@ public class CommandPlotGList extends PlottyCommand{
 		"(glist)((\\s+)(top))?((\\s+)(\\d+))?",
 		"plotty.glist",
 		"/plot glist [top] [page]",
-		"Displays the global list of plots. (add top for votes order)"
+		"Displays the global list of plots. (add top for votes order)",
+		false
 		);
 		this.plugin = pl;
 	}

@@ -130,7 +130,7 @@ public class PlottyExecutor implements CommandExecutor {
 				isInRightWorld = true;
 			}
 		}
-		if(isInRightWorld){
+		if(isInRightWorld || !cmd.plotsWorld){
 			String[] newargs = new String[args.length-1];
 			System.arraycopy(args, 1, newargs, 0, newargs.length);		
 			cmd.execute(p, newargs);

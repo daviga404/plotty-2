@@ -21,4 +21,6 @@ public class Lang {
 	public String mustBeInPlotsWorld;
 	public String madePrivate;
 	public String cantVote;
+	public String noMoney;
+	public String moneyTaken;
 }

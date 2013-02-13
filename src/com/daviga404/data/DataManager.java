@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
@@ -18,14 +19,40 @@ public class DataManager {
 	public File file;
 	public Gson gson;
 	public Plotty plugin;
-	public PlottyConfig config;
+	public PlottyConfig config,defaultConfig;
 	public DataManager(Plotty plugin){
+		defaultConfig = new PlottyConfig();
+		defaultConfig.baseBlock = 1;
+		defaultConfig.centertp = true;
+		defaultConfig.clearEnabled = false;
+		defaultConfig.clearOnDelete = true;
+		defaultConfig.delCooldown = 30;
+		defaultConfig.enableEco = false;
+		defaultConfig.enableTnt = false;
+		defaultConfig.maxPlots = 5;
+		defaultConfig.playerGrantNotify = new String[]{};
+		defaultConfig.players = new PlottyPlayer[]{};
+		defaultConfig.plotCost = 0.0;
+		defaultConfig.plotHeight = 20;
+		defaultConfig.plotSize = 64;
+		defaultConfig.publicByDefault = true;
+		defaultConfig.surfaceBlock = 2;
+		defaultConfig.voteDelay = 12.0;
+		defaultConfig.worlds = new String[]{};
+		defaultConfig.flags = new HashMap<String,String>();
 		this.plugin = plugin;
 		try {
 			checkForFile();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void checkDefaults(){
+		config.flags = config.flags == null ? defaultConfig.flags : config.flags;
+		config.playerGrantNotify = config.playerGrantNotify == null ? defaultConfig.playerGrantNotify : config.playerGrantNotify;
+		config.players = config.players == null ? defaultConfig.players : config.players;
+		config.worlds = config.worlds == null ? defaultConfig.worlds : config.worlds;
+		save();
 	}
 	/**
 	 * Checks if the plots file exists and loads data into class.
@@ -40,11 +67,10 @@ public class DataManager {
 		if(!file.exists()){
 			file.createNewFile();
 			Bukkit.getLogger().info("Creating default plots file...");
-			String defaultJson = "{\"plotSize\":64,\"plotHeight\":20,\"maxPlots\":5,\"baseBlock\":1,\"surfaceBlock\":2,\"delCooldown\":30,\"clearOnDelete\":true,\"publicByDefault\":false,\"worlds\":[\"Creative\"],\"centertp\":true,\"players\":[]}";
 			FileWriter out = new FileWriter(file);
-			config = gson.fromJson(defaultJson, PlottyConfig.class);
-			out.write(gson.toJson(config));
+			out.write(gson.toJson(defaultConfig));
 			out.flush();
+			config = defaultConfig;
 			Bukkit.getLogger().info("Created default plots file (plugins/Plotty/plots.json)");
 		}else{
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -55,6 +81,7 @@ public class DataManager {
 			config = gson.fromJson(buff, PlottyConfig.class);
 			Bukkit.getLogger().info("Plotty data loaded.");
 		}
+		checkDefaults();
 	}
 	/**
 	 * Adds a plot to the config file and saves.

@@ -1,11 +1,14 @@
 package com.daviga404.plots;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 
 import com.daviga404.Plotty;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
@@ -15,6 +18,7 @@ public class PlotRegion {
 	public static void init(Plotty pl){
 		PlotRegion.plugin = pl;
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void makePlotRegion(Plot p,String owner,int id){
 		String name = "plot_"+owner.toLowerCase()+"_"+id;
 		BlockVector point1 = new BlockVector(p.getX(),0,p.getZ());
@@ -24,6 +28,18 @@ public class PlotRegion {
 		pcr.getOwners().addPlayer(owner);
 		if(!plugin.getDataManager().config.enableTnt){
 			pcr.setFlag(DefaultFlag.TNT,State.DENY);
+		}
+		CommandSender s = (CommandSender)Bukkit.getPlayer(owner);
+		for(Flag<?> flag : DefaultFlag.getFlags()){
+			if(plugin.getDataManager().config.flags.containsKey(flag.getName())){
+				try {
+					Object obj = flag.parseInput(plugin.worldGuard, s, plugin.getDataManager().config.flags.get(flag.getName()));
+					Flag f = (Flag)flag;
+					pcr.setFlag(f, obj);
+				}catch(Exception e1){
+					s.sendMessage("§4[Plotty] §cError in config: custom WorldGuard flag has incorrect value.");
+				}
+			}
 		}
 		rm.addRegion(pcr);
 		try {

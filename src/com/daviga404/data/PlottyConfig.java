@@ -1,5 +1,8 @@
 package com.daviga404.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PlottyConfig {
 	public int plotSize;
 	public int plotHeight;
@@ -16,4 +19,7 @@ public class PlottyConfig {
 	public double voteDelay=24.0;
 	public String[] playerGrantNotify=new String[]{};
 	public PlottyPlayer[] players;
+	public boolean enableEco = false;
+	public double plotCost = 0.0;
+	public Map<String,String> flags = new HashMap<String,String>();
 }

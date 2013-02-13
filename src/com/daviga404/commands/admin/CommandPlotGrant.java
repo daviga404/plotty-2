@@ -16,7 +16,8 @@ public class CommandPlotGrant extends PlottyCommand{
 		"(grant)( )(\\w+)(( )(\\d+))?",
 		"plotty.admin.grant",
 		"/plot grant <name> [amount]",
-		"Gives a player the ability to make one or 'amount' plots."
+		"Gives a player the ability to make one or 'amount' plots.",
+		false
 		);
 		this.plugin = pl;
 	}

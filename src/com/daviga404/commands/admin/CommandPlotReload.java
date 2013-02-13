@@ -14,7 +14,8 @@ public class CommandPlotReload extends PlottyCommand{
 		"(reload)",
 		"plotty.admin.reload",
 		"/plot reload",
-		"Reloads the configuration and language files."
+		"Reloads the configuration and language files.",
+		false
 		);
 		this.plugin = pl;
 	}

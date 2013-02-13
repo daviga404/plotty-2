@@ -15,7 +15,8 @@ public class CommandPlotList extends PlottyCommand{
 		"list",
 		"plotty.list",
 		"/plot list",
-		"Lists all plots."
+		"Lists all plots.",
+		false
 		);
 		this.plugin = pl;
 	}
@@ -30,6 +31,8 @@ public class CommandPlotList extends PlottyCommand{
 			builder.append(plot.x);
 			builder.append(", z:");
 			builder.append(plot.z);
+			builder.append(", w:");
+			builder.append(plot.world);
 			builder.append("] §b[Friends: ");
 			String friendsString="";
 			for(String s : plot.friends){
